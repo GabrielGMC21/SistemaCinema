@@ -1,0 +1,111 @@
+body {
+  font-family: 'Roboto'
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-row {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 30px;
+}
+
+.titulo {
+  text-align: center;
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+.form-control,
+.form-select {
+  border-radius: 0.35rem;
+}
+
+.form-check.form-switch {
+  align-items: center;
+}
+
+.form-check-label {
+  margin-left: .4rem;
+}
+
+.btn-primary {
+  padding: 0.45rem 1rem;
+}
+
+.validation-summary-errors,
+.text-danger[asp-validation-summary] {
+  color: #b00020;
+}
+
+.poster-img {
+  width: 60px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.poster-placeholder {
+  width: 60px;
+  height: 90px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.classificacao-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.info-box {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.card-title {
+  color: #212529;
+  font-weight: 700;
+}
+
+.text-justify {
+  text-align: justify;
+  line-height: 1.6;
+}

@@ -1,0 +1,89 @@
+﻿@model Sistema_Cinema.Models.Filme
+
+@{
+    ViewData["Title"] = Model.Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-4">
+    <a asp-action="Index" class="btn btn-outline-secondary">← Voltar para Filmes</a>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="@Model.UrlPoster" class="card-img-top" alt="@Model.Titulo" style="object-fit: contain; height: 450px;">
+                <div class="card-body text-center">
+                    @if (Model.emCartaz)
+                    {
+                        <span class="badge bg-success mb-2" style="font-size: 17px">Em Cartaz</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary mb-2" style="font-size: 17px">Desativado</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h1 class="card-title mb-1">@Model.Titulo</h1>
+                    <p class="text-muted mb-3">Dirigido por: <strong>@Model.Diretor</strong></p>
+
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Gênero</small>
+                                <strong>@Model.Genero</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Ano</small>
+                                <strong>@Model.Ano</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Duração</small>
+                                <strong>@Model.GetDuracaoFormatada()</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Classificação</small>
+                                @{
+                                    var classificacaoFile = $"{(int)Model.Classificacao}_Borda.png";
+                                }
+                                <img src="@Url.Content($"~/images/classificacoes/{classificacaoFile}")" style="max-width: 30px;" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="mb-4">
+                        <h5>Sinopse</h5>
+                        <p class="text-justify">@Model.Sinopse</p>
+                    </div>
+
+                    <div class="text-muted small">
+                        <i class="bi bi-calendar"></i> Cadastrado em: <strong>@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")</strong>
+                    </div>
+
+                    <div class="mt-4 d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

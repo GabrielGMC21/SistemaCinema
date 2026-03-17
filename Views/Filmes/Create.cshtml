@@ -1,0 +1,102 @@
+﻿@model Sistema_Cinema.Models.Filme
+
+@{
+    ViewData["Title"] = "Cadastrar Filme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="titulo">Cadastrar Filme</h1>
+<hr />
+<div>
+    <div>
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="Titulo" class="form-label"></label>
+                    <input asp-for="Titulo" class="form-control" placeholder="Digite o título do filme" />
+                    <span asp-validation-for="Titulo" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Diretor" class="form-label"></label>
+                    <input asp-for="Diretor" class="form-control" placeholder="Digite o nome do diretor" />
+                    <span asp-validation-for="Diretor" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Genero" class="form-label"></label>
+                    <input asp-for="Genero" class="form-control" placeholder="ex: Ação, Drama, Comédia" />
+                    <span asp-validation-for="Genero" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Ano" class="form-label"></label>
+                    <input asp-for="Ano" class="form-control" type="number" placeholder="Ano de lançamento" />
+                    <span asp-validation-for="Ano" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Classificacao" class="form-label"></label>
+                    <select asp-for="Classificacao" asp-items="Html.GetEnumSelectList<Sistema_Cinema.Models.Filme.Classificacoes>()" class="form-select">
+                        <option value="" disabled selected hidden>Escolha uma classificação</option>
+                    </select>
+                    <span asp-validation-for="Classificacao" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label class="form-label">Duração</label>
+                    <div class="input-group">
+                        <input asp-for="DuracaoHoras" class="form-control" type="number" min="0" max="23" placeholder="0" />
+                        <span class="input-group-text">h</span>
+                        <input asp-for="DuracaoMinutos" class="form-control" type="number" min="0" max="59" placeholder="0" />
+                        <span class="input-group-text">m</span>
+                    </div>
+                    <span asp-validation-for="DuracaoHoras" class="text-danger"></span>
+                    <span asp-validation-for="DuracaoMinutos" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Sinopse" class="form-label"></label>
+                <textarea asp-for="Sinopse" class="form-control" rows="4" placeholder="Digite a sinopse do filme"></textarea>
+                <span asp-validation-for="Sinopse" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="imagemPoster" class="form-label">Selecione uma imagem</label>
+                <input type="file" id="imagemPoster" name="imagemPoster" class="form-control" accept="image/*" />
+                <span asp-validation-for="UrlPoster" class="text-danger"></span>
+
+                <div id="previewContainer" class="mt-3" style="display: none;">
+                    <small class="text-muted d-block mb-2">Preview da Imagem</small>
+                    <img id="imagemPreview" src="" alt="Preview" class="img-fluid rounded" style="max-height: 300px;" />
+                </div>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check form-switch">
+                    <input asp-for="emCartaz" class="form-check-input" checked id="emCartazCheck" />
+                    <label asp-for="emCartaz" class="form-check-label">@Html.DisplayNameFor(model => model.emCartaz)</label>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Cadastrar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/createFilme.js"></script>
+}

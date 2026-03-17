@@ -1,0 +1,52 @@
+﻿@model Sistema_Cinema.Models.Sala
+
+@{
+    ViewData["Title"] = "Sala " + Model.NumeroSala;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-4">
+    <a asp-action="Index" class="btn btn-outline-secondary">← Voltar para Salas</a>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h1 class="card-title mb-1">Sala @Model.NumeroSala</h1>
+                    <hr />
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Número da Sala</small>
+                                <strong>@Model.NumeroSala</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <small class="d-block text-muted">Capacidade</small>
+                                <strong>@Model.Capacidade assentos</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Assentos</h5>
+                        <div class="row">
+                            @if (Model.Assentos.Any())
+                            {
+                                <p>Total: <strong>@Model.Capacidade</strong> assentos cadastrados</p>
+                            }
+                            else
+                            {
+                                <p class="text-muted">Nenhum assento cadastrado ainda</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

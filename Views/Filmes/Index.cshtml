@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Sistema_Cinema.Models.Filme>
+
+@{
+    ViewData["Title"] = "Filmes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Filmes</h1>
+    <a asp-action="Create" class="btn btn-primary">Cadastrar Filme</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="width:70px">Poster</th>
+                <th>Título</th>
+                <th>Gênero / Ano</th>
+                <th>Duração</th>
+                <th>Classificação</th>
+                <th>Sinopse</th>
+                <th>Estado</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var filme in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@filme.UrlPoster" alt="Poster" class="poster-img" />
+                </td>
+
+                <td>
+                    <span>@filme.Titulo</span>
+                    <small class="text-muted">@filme.Diretor</small>
+                </td>
+
+                <td>
+                    <div>@filme.Genero</div>
+                    <small class="text-muted">@filme.Ano</small>
+                </td>
+
+                <td>
+                    @filme.GetDuracaoFormatada()
+                </td>
+
+                <td>
+                    @{
+                        var classificacaoFile = $"{(int)filme.Classificacao}_Borda.png";
+                    }
+                    <img src="@Url.Content($"~/images/classificacoes/{classificacaoFile}")" class="classificacao-img" />
+                </td>
+
+                <td style="max-width:320px">
+                    @((filme.Sinopse?.Length ?? 0) > 120 ? filme.Sinopse.Substring(0, 120) + "..." : filme.Sinopse)
+                </td>
+
+                <td>
+                    @if (filme.emCartaz)
+                    {
+                        <span class="badge bg-success">Em cartaz</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Desativado</span>
+                    }
+                </td>
+
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                    <a asp-action="Details" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
+                    <form asp-action="Delete" method="post" class="d-inline delete-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@filme.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

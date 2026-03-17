@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Sistema_Cinema.Models.Sala>
+
+@{
+    ViewData["Title"] = "Salas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Salas</h1>
+    <a asp-action="Create" class="btn btn-primary">Cadastrar Sala</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Número da Sala</th>
+                <th>Capacidade</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var sala in Model)
+        {
+            <tr>
+                <td>
+                    <strong>Sala @sala.NumeroSala</strong>
+                </td>
+                <td>
+                    <span class="badge bg-info text-dark">@sala.Capacidade assentos</span>
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@sala.Id" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                    <a asp-action="Details" asp-route-id="@sala.Id" class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
+                    <form asp-action="Delete" method="post" class="d-inline delete-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@sala.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
