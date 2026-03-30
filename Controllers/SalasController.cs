@@ -71,6 +71,7 @@ namespace Sistema_Cinema.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(sala);
+                await _context.SaveChangesAsync();
 
                 int quantidadeLinhas = linhas ?? 0;
                 int quantidadeAssentosPorLinha = assentosPorLinha ?? 0;
