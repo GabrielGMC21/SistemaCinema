@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Sistema_Cinema.Models
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" lang="pt-br" />
@@ -26,18 +31,32 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Gerenciar Filmes</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalogo" asp-action="Index">Filmes em Cartaz</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Salas" asp-action="Index">Gerenciar Salas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sessoes" asp-action="Index">Gerenciar Sessões</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="CartaoFidelidade" asp-action="Index">Cartão Fidelidade</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Administração
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Filmes" asp-action="Index">Gerenciar Filmes</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Salas" asp-action="Index">Gerenciar Salas</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Sessoes" asp-action="Index">Gerenciar Sessões</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Produtos" asp-action="Index">Gerenciar Produtos</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="MovimentosCartao">Movimentos Cartão Fidelidade</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Compras">Compras</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

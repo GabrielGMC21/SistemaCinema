@@ -1,0 +1,66 @@
+@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Filmes em Cartaz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/catalogo.css" />
+
+<h1 class="mb-4">Filmes em Cartaz</h1>
+
+@if (Model.Any())
+{
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            var filme = item.Filme;
+            var mediaAvaliacao = item.MediaAvaliacao;
+            var totalAvaliacoes = item.TotalAvaliacoes;
+            
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a asp-controller="Catalogo" asp-action="Detalhes" asp-route-id="@filme.Id" class="text-decoration-none">
+                    <div class="card h-100 shadow-sm card-hover">
+                        <div class="position-relative">
+                            <img src="@filme.UrlPoster" class="card-img-top" alt="@filme.Titulo" style="object-fit: cover; height: 450px;">
+                            @{
+                                var classificacaoFile = $"{(int)filme.Classificacao}_Borda.png";
+                            }
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <img src="@Url.Content($"~/images/classificacoes/{classificacaoFile}")" style="width: 45px; height: 45px; border-radius: 4px; background: white; padding: 2px;" alt="Classificação" />
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">@filme.Titulo</h5>
+                            <p class="card-text text-muted small">@filme.Diretor</p>
+                            <p class="card-text text-muted small">@filme.Genero • @filme.Ano</p>
+                            
+                            @if (totalAvaliacoes > 0)
+                            {
+                                <div class="mt-3 pt-2 border-top">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-warning text-dark">⭐ @mediaAvaliacao.ToString("F1")</span>
+                                        <small class="text-muted">(@totalAvaliacoes @(totalAvaliacoes == 1 ? "avaliação" : "avaliações"))</small>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-3 pt-2 border-top">
+                                    <small class="text-muted">Sem avaliações</small>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> Nenhum filme em cartaz no momento.
+    </div>
+}

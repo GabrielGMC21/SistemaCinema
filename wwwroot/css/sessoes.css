@@ -1,0 +1,34 @@
+.titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 1rem;
+}
+
+.info-box {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.form-label {
+    font-weight: 500;
+}

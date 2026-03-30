@@ -1,54 +1,57 @@
 ﻿@model IEnumerable<Sistema_Cinema.Models.Sessao>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sessões";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/sessoes.css" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DataHora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecoBase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sala)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Filme)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataHora)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecoBase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sala.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filme.Diretor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Sessões</h1>
+    <a asp-action="Create" class="btn btn-primary">Cadastrar Sessão</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Data e Hora</th>
+                <th>Filme</th>
+                <th>Sala</th>
+                <th>Preço</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataHora)
+                </td>
+                <td>
+                    <strong>@item.Filme.Titulo</strong>
+                </td>
+                <td>
+                    <span class="badge bg-info text-dark">Sala @item.Sala.NumeroSala</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecoBase)
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
+                    <form asp-action="Delete" method="post" class="d-inline delete-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            Excluir
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

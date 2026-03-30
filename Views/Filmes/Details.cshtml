@@ -1,12 +1,14 @@
-﻿@model Sistema_Cinema.Models.Filme
+@model Sistema_Cinema.Models.Filme
 
 @{
     ViewData["Title"] = Model.Titulo;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="~/css/filmes.css" />
+
 <div class="mb-4">
-    <a asp-action="Index" class="btn btn-outline-secondary">← Voltar para Filmes</a>
+    <a asp-controller="Filmes" asp-action="Index" class="btn btn-outline-secondary">← Voltar para Filmes</a>
 </div>
 
 <div class="container-fluid">
@@ -75,12 +77,16 @@
                     </div>
 
                     <div class="mt-4 d-flex gap-2">
-                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+                        <a asp-controller="Filmes" asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
                             <i class="bi bi-pencil"></i> Editar
                         </a>
-                        <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">
-                            <i class="bi bi-trash"></i> Excluir
-                        </a>
+                        <form asp-controller="Filmes" asp-action="Delete" method="post" class="d-inline delete-form">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@Model?.Id" />
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Excluir
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

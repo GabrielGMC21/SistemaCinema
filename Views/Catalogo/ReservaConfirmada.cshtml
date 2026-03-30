@@ -1,0 +1,109 @@
+@model Sistema_Cinema.Models.Compra
+
+@{
+    ViewData["Title"] = "Reserva confirmada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/catalogo.css" />
+
+<div class="container py-4">
+    <h2 class="mb-4">Reserva Confirmada</h2>
+    <h4 class="text-success mb-4">✓ Obrigado pela reserva!</h4>
+
+    @if (TempData["ErroCupom"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Cupom não aplicado:</strong> @TempData["ErroCupom"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["SucessoCupom"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SucessoCupom"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card mb-4 border-success">
+        <div class="card-header bg-success text-white">
+            <h6 class="mb-0">Informações da Compra</h6>
+        </div>
+        <div class="card-body">
+            <p class="mb-2">
+                <strong>Número da Compra:</strong>
+                <span class="badge bg-secondary">#@Model.Id</span>
+            </p>
+            <p class="mb-2">
+                <strong>Data da Compra:</strong>
+                @Model.DataCompra.ToString("dd/MM/yyyy HH:mm")
+            </p>
+            @if (Model.Cupom != null)
+            {
+                <p class="mb-0 text-success">
+                    <strong>Cupom Aplicado:</strong>
+                    <span class="badge bg-success">@Model.Cupom.Codigo</span>
+                </p>
+            }
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="mb-0">Resumo Financeiro</h6>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal Ingressos:</span>
+                <span class="fw-bold">@Model.ValorIngressos.ToString("C")</span>
+            </div>
+            @if (Model.ValorDesconto > 0)
+            {
+                <div class="d-flex justify-content-between mb-3 text-success">
+                    <span>Desconto:</span>
+                    <span class="fw-bold">- @Model.ValorDesconto.ToString("C")</span>
+                </div>
+            }
+            <hr class="my-2" />
+            <div class="d-flex justify-content-between fw-bold text-success">
+                <span>Total a Pagar:</span>
+                <span class="fs-5">@Model.ValorFinal.ToString("C")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h5 class="mb-3">Ingressos Reservados</h5>
+        @if (Model.Reservas != null && Model.Reservas.Count > 0)
+        {
+            <div class="row g-3">
+                @foreach (var reserva in Model.Reservas)
+                {
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title mb-3">@reserva.Sessao?.Filme?.Titulo</h6>
+                                <div class="row g-3 text-muted small">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Data/Hora:</strong> @reserva.Sessao?.DataHora.ToString("dd/MM/yyyy HH:mm")</p>
+                                        <p class="mb-0"><strong>Sala:</strong> @reserva.Sessao?.Sala?.NumeroSala</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Assento:</strong> <span class="badge bg-primary">@reserva.Assento?.Codigo</span></p>
+                                        <p class="mb-0"><strong>Data Reserva:</strong> @reserva.DataReserva.ToString("dd/MM/yyyy HH:mm")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <a asp-action="Index" asp-controller="Catalogo" class="btn btn-secondary btn-lg w-100">
+        ← Voltar ao Catálogo
+    </a>
+</div>

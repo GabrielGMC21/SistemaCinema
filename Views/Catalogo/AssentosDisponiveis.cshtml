@@ -1,0 +1,51 @@
+@model Sistema_Cinema.Models.AssentosParaReservaViewModel
+
+@{
+    ViewData["Title"] = "Assentos disponíveis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/catalogo.css" />
+
+<h2>Assentos da Sessão</h2>
+
+<div>
+    <h4>@Model.Sessao.Filme?.Titulo</h4>
+    <p><strong>Data:</strong> @Model.Sessao.DataHora.ToString("dd/MM/yyyy HH:mm") • <strong>Sala:</strong> @Model.Sessao.Sala?.NumeroSala • <strong>Preço:</strong> @Model.Sessao.PrecoBase.ToString("C")</p>
+</div>
+
+<div class="mb-3">
+    <span class="me-2">Legenda:</span>
+    <button class="btn btn-sm btn-outline-success me-1" disabled>Disponível</button>
+    <button class="btn btn-sm btn-danger me-1" disabled>Reservado</button>
+</div>
+
+@if (TempData["ErroReserva"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErroReserva"]</div>
+}
+
+<form asp-action="ResumoCompra" asp-controller="Catalogo" method="post" id="reservaForm">
+    <input type="hidden" name="sessaoId" value="@Model.Sessao.Id" />
+    <div id="assentoContainer"></div>
+
+    <div class="row g-2">
+        @foreach (var a in Model.Assentos)
+        {
+            <div class="col-2 col-sm-1">
+                @if (a.Reservado)
+                {
+                    <button class="btn btn-danger w-100" disabled>@a.Codigo</button>
+                }
+                else
+                {
+                    <button class="seat-btn btn btn-outline-success w-100" type="button" data-assento-id="@a.Id">@a.Codigo</button>
+                }
+            </div>
+        }
+    </div>
+
+    <button type="submit" id="btnContinuar" class="btn btn-primary mt-3" disabled>Continuar para resumo</button>
+</form>
+
+<script src="~/js/catalogo.js"></script>

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Sistema_Cinema;
 using Sistema_Cinema.Models;
 
 namespace Sistema_Cinema.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SalasController : Controller
     {
         private readonly Contexto _context;
@@ -69,7 +71,6 @@ namespace Sistema_Cinema.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(sala);
-                await _context.SaveChangesAsync();
 
                 int quantidadeLinhas = linhas ?? 0;
                 int quantidadeAssentosPorLinha = assentosPorLinha ?? 0;

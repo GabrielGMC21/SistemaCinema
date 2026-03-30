@@ -1,43 +1,64 @@
 ﻿@model Sistema_Cinema.Models.Sessao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes da Sessão";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<link rel="stylesheet" href="~/css/sessoes.css" />
 
-<div>
-    <h4>Sessao</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataHora)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataHora)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecoBase)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecoBase)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sala)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sala.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Filme)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Filme.Diretor)
-        </dd>
-    </dl>
+<div class="mb-4">
+    <a asp-action="Index" class="btn btn-outline-secondary">← Voltar para Sessões</a>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h1 class="card-title mb-1">@Model.Filme.Titulo - Sala @Model.Sala.NumeroSala</h1>
+        <hr />
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="info-box">
+                    <small class="d-block text-muted">Data e Hora</small>
+                    <strong>@Model.DataHora.ToString("dd/MM/yyyy HH:mm")</strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-box">
+                    <small class="d-block text-muted">Preço Base</small>
+                    <strong>@Model.PrecoBase.ToString("C")</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="info-box">
+                    <small class="d-block text-muted">Filme</small>
+                    <strong>@Model.Filme.Titulo</strong>
+                    <br />
+                    <small class="text-muted">Diretor: @Model.Filme.Diretor</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="info-box">
+                    <small class="d-block text-muted">Sala</small>
+                    <strong>Sala @Model.Sala.NumeroSala</strong>
+                    <br />
+                    <small class="text-muted">Capacidade: @Model.Sala.Capacidade assentos</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex gap-2">
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Editar</a>
+    <form asp-action="Delete" method="post" class="d-inline delete-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model?.Id" />
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Excluir
+        </button>
+    </form>
 </div>

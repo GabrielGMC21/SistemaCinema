@@ -9,7 +9,7 @@ namespace Sistema_Cinema.Models
         {
             Ganhos,
 
-            Utilizdos
+            Utilizados
         }
 
         [Key]

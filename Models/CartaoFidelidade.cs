@@ -20,6 +20,6 @@ namespace Sistema_Cinema.Models
         public ICollection<HistoricoFidelidade> Historico { get; set; } = new List<HistoricoFidelidade>();
 
         [ForeignKey("IdCliente")]
-        public Cliente Cliente { get; set; }
+        public Cliente? Cliente { get; set; }
     }
 }

@@ -1,0 +1,37 @@
+.titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 1rem;
+}
+
+.poster-img {
+    width: 70px;
+    height: auto;
+    border-radius: 0.25rem;
+    object-fit: cover;
+}
+
+.classificacao-img {
+    width: 50px;
+    height: auto;
+    border-radius: 0.25rem;
+}
+
+.info-box {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+.card-body textarea {
+    resize: vertical;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.form-label {
+    font-weight: 500;
+}

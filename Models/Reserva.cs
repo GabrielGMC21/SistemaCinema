@@ -16,12 +16,12 @@ namespace Sistema_Cinema.Models
         public DateTime DataReserva { get; set; } = DateTime.Now;
 
         [ForeignKey("IdAssento")]
-        public Assento Assento { get; set; }
+        public Assento? Assento { get; set; }
 
         [ForeignKey("IdSessao")]
-        public Sessao Sessao { get; set; }
+        public Sessao? Sessao { get; set; }
 
         [ForeignKey("IdCompra")]
-        public Compra Compra { get; set; }
+        public Compra? Compra { get; set; }
     } 
 }

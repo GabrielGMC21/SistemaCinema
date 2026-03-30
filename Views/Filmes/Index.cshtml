@@ -1,13 +1,15 @@
-﻿@model IEnumerable<Sistema_Cinema.Models.Filme>
+@model IEnumerable<Sistema_Cinema.Models.Filme>
 
 @{
     ViewData["Title"] = "Filmes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="~/css/filmes.css" />
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-0">Filmes</h1>
-    <a asp-action="Create" class="btn btn-primary">Cadastrar Filme</a>
+    <a asp-controller="Filmes" asp-action="Create" class="btn btn-primary">Cadastrar Filme</a>
 </div>
 
 <div class="table-responsive">
@@ -54,7 +56,16 @@
                 </td>
 
                 <td style="max-width:320px">
-                    @((filme.Sinopse?.Length ?? 0) > 120 ? filme.Sinopse.Substring(0, 120) + "..." : filme.Sinopse)
+                    @{
+                        if (!string.IsNullOrEmpty(filme.Sinopse) && filme.Sinopse.Length > 120)
+                        {
+                            @filme.Sinopse.Substring(0, 120)<text>...</text>
+                        }
+                        else
+                        {
+                            @filme.Sinopse
+                        }
+                    }
                 </td>
 
                 <td>
@@ -69,9 +80,9 @@
                 </td>
 
                 <td class="text-end">
-                    <a asp-action="Edit" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-primary me-1">Editar</a>
-                    <a asp-action="Details" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
-                    <form asp-action="Delete" method="post" class="d-inline delete-form">
+                    <a asp-controller="Filmes" asp-action="Edit" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-primary me-1">Editar</a>
+                    <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id" class="btn btn-sm btn-outline-secondary me-1">Detalhes</a>
+                    <form asp-controller="Filmes" asp-action="Delete" method="post" class="d-inline delete-form">
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@filme.Id" />
                         <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
@@ -82,4 +93,3 @@
         </tbody>
     </table>
 </div>
-

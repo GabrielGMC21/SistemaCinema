@@ -1,0 +1,46 @@
+.card-hover {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+}
+
+.seat-btn {
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem;
+}
+
+.seat-btn.selected {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.info-box {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+.produto-item {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.produto-quantidade {
+    max-width: 80px;
+}
+
+.legenda-assentos {
+    margin-bottom: 1rem;
+}
+
+.legenda-assentos button {
+    margin-right: 0.5rem;
+}

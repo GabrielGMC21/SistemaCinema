@@ -1,12 +1,15 @@
-﻿@model Sistema_Cinema.Models.Filme
+@model Sistema_Cinema.Models.Filme
 
 @{
     ViewData["Title"] = "Editar Filme";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="~/css/filmes.css" />
+
 <h1 class="titulo">Editar Filme</h1>
 <hr />
+
 @{
     var previewDisplay = string.IsNullOrEmpty(Model?.UrlPoster) ? "none" : "block";
     var posterUrl = Model?.UrlPoster ?? string.Empty;
@@ -92,7 +95,7 @@
 
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary">Salvar</button>
-                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                <a asp-controller="Filmes" asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
@@ -102,4 +105,3 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/createFilme.js"></script>
 }
-

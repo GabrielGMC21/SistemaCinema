@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
@@ -13,6 +14,7 @@ using Sistema_Cinema.Models;
 
 namespace Sistema_Cinema.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FilmesController : Controller
     {
         private readonly Contexto _context;
@@ -153,6 +155,15 @@ namespace Sistema_Cinema.Controllers
 
             if (imagemPoster != null && imagemPoster.Length > 0)
             {
+                if (!string.IsNullOrEmpty(filmeExistente.UrlPoster))
+                {
+                    var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filmeExistente.UrlPoster.TrimStart('/'));
+                    if (System.IO.File.Exists(caminhoImagem))
+                    {
+                        System.IO.File.Delete(caminhoImagem);
+                    }
+                }
+
                 try
                 {
                     var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -228,6 +239,14 @@ namespace Sistema_Cinema.Controllers
             var filme = await _context.Filmes.FindAsync(id);
             if (filme != null)
             {
+                if (!string.IsNullOrEmpty(filme.UrlPoster))
+                {
+                    var caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", filme.UrlPoster.TrimStart('/'));
+                    if (System.IO.File.Exists(caminhoImagem))
+                    {
+                        System.IO.File.Delete(caminhoImagem);
+                    }
+                }
                 _context.Filmes.Remove(filme);
             }
 

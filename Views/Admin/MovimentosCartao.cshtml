@@ -1,0 +1,41 @@
+@model IEnumerable<Sistema_Cinema.Models.HistoricoFidelidade>
+
+@{
+    ViewData["Title"] = "Movimentos Cartões Fidelidade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Movimentos Cartões Fidelidade</h1>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Cartão</th>
+                <th>Cliente</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Id</td>
+                <td>@m.IdCartao</td>
+                <td>
+                    @{ var nome = m.CartaoFidelidade?.Cliente?.AppUser?.Nome ?? m.CartaoFidelidade?.Cliente?.AppUser?.UserName ?? "—"; }
+                    @nome
+                </td>
+                <td>@m.Tipo</td>
+                <td>@m.Quantidade</td>
+                <td style="max-width:320px">@m.Descricao</td>
+                <td>@m.DataMovimento.ToString("g")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

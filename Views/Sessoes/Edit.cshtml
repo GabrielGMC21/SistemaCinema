@@ -1,47 +1,59 @@
 ﻿@model Sistema_Cinema.Models.Sessao
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Sessão";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<link rel="stylesheet" href="~/css/sessoes.css" />
 
-<h4>Sessao</h4>
+<h1 class="titulo">Editar Sessão</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div>
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="DataHora" class="control-label"></label>
-                <input asp-for="DataHora" class="form-control" />
-                <span asp-validation-for="DataHora" class="text-danger"></span>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="DataHora" class="form-label"></label>
+                    <input asp-for="DataHora" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="DataHora" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="PrecoBase" class="form-label"></label>
+                    <input asp-for="PrecoBase" class="form-control" type="number" step="0.01" min="0" />
+                    <span asp-validation-for="PrecoBase" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PrecoBase" class="control-label"></label>
-                <input asp-for="PrecoBase" class="form-control" />
-                <span asp-validation-for="PrecoBase" class="text-danger"></span>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label asp-for="IdFilme" class="form-label"></label>
+                    <select asp-for="IdFilme" class="form-control" asp-items="ViewBag.IdFilme"></select>
+                    <span asp-validation-for="IdFilme" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="IdSala" class="form-label"></label>
+                    <select asp-for="IdSala" class="form-control" asp-items="ViewBag.IdSala"></select>
+                    <span asp-validation-for="IdSala" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="IdFilme" class="control-label"></label>
-                <select asp-for="IdFilme" class="form-control" asp-items="ViewBag.IdFilme"></select>
-                <span asp-validation-for="IdFilme" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IdSala" class="control-label"></label>
-                <select asp-for="IdSala" class="form-control" asp-items="ViewBag.IdSala"></select>
-                <span asp-validation-for="IdSala" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i> Salvar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

@@ -69,6 +69,8 @@ namespace Sistema_Cinema.Models
         [Display(Name = "Em cartaz")]
         public bool emCartaz { get; set; }
 
+        public ICollection<Sessao> Sessoes { get; set; } = new List<Sessao>();
+
         public string GetDuracaoFormatada()
         {
             int horas = Duracao / 60;

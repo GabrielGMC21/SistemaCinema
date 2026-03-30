@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Sistema de Cinema";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/home.css" />
+
+<div class="container-fluid py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">🎬 Bem-vindo ao Cinema</h1>
+        <p class="lead text-muted">Compre ingressos, reserve assentos e aproveite lanches especiais</p>
+    </div>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm hover-card">
+                    <div class="card-body p-5 text-center bg-gradient">
+                        <h2 class="mb-3 fw-bold">🎥 Explorar Filmes</h2>
+                        <p class="mb-4 text-muted">Confira os filmes em cartaz e reserve seus assentos agora mesmo.</p>
+                        <a asp-controller="Catalogo" asp-action="Index" class="btn btn-primary btn-lg">
+                            <i class="bi bi-play-circle"></i> Ir para Catálogo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-3">
+                            <span class="fs-2">👤</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-2">Meu Perfil</h5>
+                        <p class="card-text text-muted small flex-grow-1 mb-3">Veja seu histórico de compras, dados pessoais e informações da conta.</p>
+                        <a asp-controller="Profile" asp-action="Index" class="btn btn-outline-primary btn-sm w-100">Acessar Perfil</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body p-4 d-flex flex-column">
+                        <div class="mb-3">
+                            <span class="fs-2">⭐</span>
+                        </div>
+                        <h5 class="card-title fw-bold mb-2">Programa de Fidelidade</h5>
+                        <p class="card-text text-muted small flex-grow-1 mb-3">Acumule pontos em cada compra e desbloqueie benefícios exclusivos.</p>
+                        <a asp-controller="CartaoFidelidade" asp-action="Index" class="btn btn-outline-primary btn-sm w-100">Ver Fidelidade</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

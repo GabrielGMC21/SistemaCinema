@@ -1,0 +1,109 @@
+@model Sistema_Cinema.Models.Cliente
+
+@{
+    ViewData["Title"] = "Cartão Fidelidade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/cartao-fidelidade.css" />
+
+<div class="container-fluid my-4 px-3">
+    <div class="row">
+        <div class="col-12">
+
+            @if (TempData["MensagemErro"] != null)
+            {
+                <div class="alert alert-danger">@TempData["MensagemErro"]</div>
+            }
+            @if (TempData["MensagemSucesso"] != null)
+            {
+                <div class="alert alert-success">@TempData["MensagemSucesso"]</div>
+            }
+
+            <div class="card fidelidade-card mb-3">
+                <div class="card-body">
+                    <h3 class="card-title mb-1">Meu Cartão Fidelidade</h3>
+                    <p class="mb-2 text-muted">Olá, @User.Identity?.Name!</p>
+
+                    <div class="saldo d-flex align-items-baseline justify-content-between">
+                        <div>
+                            <small class="text-muted d-block">Saldo de Pontos</small>
+                            <span class="saldo-pontos">@Model.CartaoFidelidade.SaldoPontos</span>
+                        </div>
+                        <div class="text-right">
+                            <small class="text-muted">Valor do desconto</small>
+                            <div id="descontoInfo" class="desconto-info">0% de desconto</div>
+                            <small class="text-muted d-block">Cada 10 pontos = 1% de desconto (máx. 50%)</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="Resgatar" method="post" class="mb-3">
+                @if (@Model.CartaoFidelidade.SaldoPontos < 10)
+                {
+                    <div class="alert alert-warning">Você precisa de pelo menos 10 pontos para resgatar um cupom.</div>
+                }
+                else
+                {
+                    <div class="mb-2">
+                        <label for="valorPontos" class="form-label">Quanto você deseja resgatar?</label>
+                        <div class="input-group">
+                            <input type="number"
+                                id="valorPontos"
+                                class="form-control"
+                                step="10"
+                                min="10"
+                                max="@Math.Min(Model.CartaoFidelidade.SaldoPontos, 500)"
+                                placeholder="10, 20, 30..."
+                                name="valorPontos"
+                                required />
+                            <button type="button" class="btn btn-outline-secondary" id="maxBtn" title="Usar máximo">Máx</button>
+                        </div>
+                        <small class="form-text text-muted">Digite um valor em pontos (mínimo 10, máximo @Math.Min(Model.CartaoFidelidade.SaldoPontos, 500))</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100" id="btnResgatar">Resgatar Cupom</button>
+                }
+            </form>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Histórico</h5>
+                    @if (Model.CartaoFidelidade.Historico != null && Model.CartaoFidelidade.Historico.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                        @foreach (var item in Model.CartaoFidelidade.Historico.OrderByDescending(h => h.DataMovimento))
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>@item.Tipo</strong>
+                                    <div class="small text-muted">@item.Descricao</div>
+                                </div>
+                                <div class="text-end">
+                                    @if (item.Tipo == Sistema_Cinema.Models.HistoricoFidelidade.TipoMovimento.Ganhos)
+                                    {
+                                        <span class="ganhos">+@item.Quantidade pontos</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="gastos">-@item.Quantidade pontos</span>
+                                    }
+                                    <div class="small text-muted">@item.DataMovimento.ToString("dd/MM/yyyy HH:mm")</div>
+                                </div>
+                            </li>
+                        }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="text-muted">Nenhum registro.</div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/cartao-fidelidade.js"></script>

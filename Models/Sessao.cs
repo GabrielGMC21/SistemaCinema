@@ -18,16 +18,16 @@ namespace Sistema_Cinema.Models
         [Display(Name = "Preço base")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public decimal PrecoBase { get; set; }
-
+        [Required(ErrorMessage ="Obrigatório informar o filme da sessão")]
         public int IdFilme { get; set; }
-        
+        [Required(ErrorMessage ="Obrigatório informar a sala da sessão")]
         public int IdSala { get; set; }
 
         [ForeignKey("IdSala")]
-        public Sala Sala { get; set; }
+        public Sala? Sala { get; set; }
 
         [ForeignKey("IdFilme")]
-        public Filme Filme { get; set; }
+        public Filme? Filme { get; set; }
 
     }
 }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Sistema_Cinema;
 using Sistema_Cinema.Models;
 
 namespace Sistema_Cinema.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SessoesController : Controller
     {
         private readonly Contexto _context;
@@ -22,7 +24,10 @@ namespace Sistema_Cinema.Controllers
         // GET: Sessoes
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.Sessoes.Include(s => s.Filme).Include(s => s.Sala);
+            var contexto = _context.Sessoes
+                .Include(s => s.Filme)
+                .Include(s => s.Sala)
+                .ThenInclude(sala => sala.Assentos);
             return View(await contexto.ToListAsync());
         }
 
@@ -37,6 +42,7 @@ namespace Sistema_Cinema.Controllers
             var sessao = await _context.Sessoes
                 .Include(s => s.Filme)
                 .Include(s => s.Sala)
+                .ThenInclude(sala => sala.Assentos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sessao == null)
             {
@@ -49,8 +55,8 @@ namespace Sistema_Cinema.Controllers
         // GET: Sessoes/Create
         public IActionResult Create()
         {
-            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Diretor");
-            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "Id");
+            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Titulo");
+            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "NumeroSala");
             return View();
         }
 
@@ -67,8 +73,15 @@ namespace Sistema_Cinema.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Diretor", sessao.IdFilme);
-            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "Id", sessao.IdSala);
+            else
+            {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+            }
+            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Titulo", sessao.IdFilme);
+            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "NumeroSala", sessao.IdSala);
             return View(sessao);
         }
 
@@ -85,8 +98,8 @@ namespace Sistema_Cinema.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Diretor", sessao.IdFilme);
-            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "Id", sessao.IdSala);
+            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Titulo", sessao.IdFilme);
+            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "NumeroSala", sessao.IdSala);
             return View(sessao);
         }
 
@@ -122,8 +135,8 @@ namespace Sistema_Cinema.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Diretor", sessao.IdFilme);
-            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "Id", sessao.IdSala);
+            ViewData["IdFilme"] = new SelectList(_context.Filmes, "Id", "Titulo", sessao.IdFilme);
+            ViewData["IdSala"] = new SelectList(_context.Salas, "Id", "NumeroSala", sessao.IdSala);
             return View(sessao);
         }
 

@@ -1,0 +1,43 @@
+.fidelidade-card {
+    margin-bottom: 20px;
+}
+
+.fidelidade-card .card-body {
+    padding: 1rem 1.25rem;
+}
+
+.saldo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.saldo-pontos {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.desconto-info {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+
+.input-group .form-control {
+    min-width: 0;
+}
+
+#maxBtn {
+    cursor: pointer;
+}
+
+.list-group-item .ganhos {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.list-group-item .gastos {
+    color: #dc3545;
+    font-weight: 600;
+}
